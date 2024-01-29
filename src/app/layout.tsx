@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AuthContextProvider } from "./context/AuthContext";
+import { NavigationProvider } from "./context/NavigationContext";
+import { MenuContextProvider } from "./context/MenuContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <NavigationProvider>
+      <AuthContextProvider>
+        <MenuContextProvider>
+          <html lang="en">
+            <body className={inter.className}>{children}</body>
+          </html>
+        </MenuContextProvider>
+      </AuthContextProvider>
+    </NavigationProvider>
   );
 }
